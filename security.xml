@@ -1,0 +1,11 @@
+<beans>
+    <bean id="requestDataValueProcessor" class="org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor"/>
+    
+    <bean id="csrfFilter" class="org.springframework.security.web.csrf.CsrfFilter">
+        <constructor-arg>
+            <bean class="org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository">
+                <property name="headerName" value="X-SECURITY" />
+            </bean>
+        </constructor-arg>
+    </bean>
+</beans>
