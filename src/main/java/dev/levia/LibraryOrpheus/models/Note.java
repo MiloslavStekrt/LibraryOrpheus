@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -20,6 +22,10 @@ public class Note {
 
     private String note;
     private Date whenDate;
+
+    // @ManyToOne
+    // @JoinColumn(name = "person_id", updatable = false, insertable = false)
+    // private Person person;
 
     // constructor
     public Note(){}
@@ -36,13 +42,19 @@ public class Note {
     public Long getId() { return id; }
     public Date getWhen() { return whenDate; }
     public String getNote() { return note; }
+    public String getWhenNormal() {
+        return this.whenDate.getDay()+". "+this.whenDate.getMonth()+". "
+            +(new java.util.Date().getYear() != this.whenDate.getYear() ? this.whenDate.getYear() - 100 : "");
+    }
 
     // Setters
     public void setWhen(Date whenDate) { this.whenDate = whenDate; }
     public void setNote(String note) { this.note = note; }
 
     public String toString() {
-        return "Note {title: "+this.note+", when: "+this.whenDate+"}";
+        return "Note {id: "+this.id
+            +",title: "+this.note
+            +", when: "+this.whenDate+"}";
     }
 
 }

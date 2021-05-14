@@ -10,11 +10,13 @@ import dev.levia.LibraryOrpheus.models.Note;
 
 @Service
 public class NoteService {
-    
+
     private final NoteRepository repo;
 
     @Autowired
-    public NoteService(NoteRepository repo) { this.repo = repo; }
+    public NoteService(NoteRepository repo) {
+        this.repo = repo; 
+    }
 
     public List<Note> getAllNotes() {
         return repo.findAll();
@@ -23,5 +25,9 @@ public class NoteService {
     public Note getNote(Long id) {
         return repo.findById(id).get();
     }
+
+    // public Optional<Note> deleteNote(Long id) {
+    //     return repo.delConnectionByNoteId(id);
+    // }
 
 }

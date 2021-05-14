@@ -1,40 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
     <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+        <div th:replace="fragment/head :: head"></div>
         <title>Library-orpheus</title>
     </head>
     <body style="margin: auto; max-width: 99.99vw;">
-        <header class="navbar navbar-dark bg-dark">
-            <button onclick="window.location.href='/'" style="background-color: gray; border: none" class="rounded">
-                <h1 class="align-middle">
-                    &nbsp
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-braces" viewBox="0 0 16 16">
-                        <path d="M2.114 8.063V7.9c1.005-.102 1.497-.615 1.497-1.6V4.503c0-1.094.39-1.538 1.354-1.538h.273V2h-.376C3.25 2 2.49 2.759 2.49 4.352v1.524c0 1.094-.376 1.456-1.49 1.456v1.299c1.114 0 1.49.362 1.49 1.456v1.524c0 1.593.759 2.352 2.372 2.352h.376v-.964h-.273c-.964 0-1.354-.444-1.354-1.538V9.663c0-.984-.492-1.497-1.497-1.6zM13.886 7.9v.163c-1.005.103-1.497.616-1.497 1.6v1.798c0 1.094-.39 1.538-1.354 1.538h-.273v.964h.376c1.613 0 2.372-.759 2.372-2.352v-1.524c0-1.094.376-1.456 1.49-1.456V7.332c-1.114 0-1.49-.362-1.49-1.456V4.352C13.51 2.759 12.75 2 11.138 2h-.376v.964h.273c.964 0 1.354.444 1.354 1.538V6.3c0 .984.492 1.497 1.497 1.6z"/>
-                    </svg>
-                    Leviathan dev. &nbsp
-                </h1>
-            </button>
-            <nav>
-                <a th:each="navlink : ${navlinks}" th:href="${navlink.location}" class="mx-1 btn btn-primary" th:text="${navlink.show}"></a>
-                <button onclick="window.location.href=`#left`" class="btn btn-secondary mx-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
-                        <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-                    </svg>
-                </button>
-            </nav>
-        </header>
+        <div th:replace="fragment/header :: header"></div>
         <main style="max-width: 100vw; max-height: 80vh" class="bg-primary row m-0">
             <div style="height: 88vh" class="container col-sm-4 bg-secondary py-2 overflow-auto">
                 <h3 class="text-center text-light">Person's List</h3>
                 <a class="btn btn-dark col my-1" th:each="person : ${persons}" th:href="@{ '/person/'+${ person.id } }" th:text="${person.name}"></a>
                 <a class="btn btn-dark col my-1" href="/person/">Add new</a>
             </div>
-            <form method="POST" th:action="create" class="container col bg-success py-2">
+            <form class="container col bg-success py-2" th:action="@{ ${selectedPerson?.id} == null ? '/person/new' : '/person/'+${selectedPerson?.id}+'/update'}" th:object="${selectedPerson}" method="post">
                 <!-- <div class="row p">
                     <div class="col">
                         <svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -52,42 +30,38 @@
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text">Person's name: </span>
-                    <input type="text" placeholder="Enter name" th:value="${selectedPerson?.name}" class="form-control text-center">
+                    <input name="name" type="text" placeholder="Enter name" th:value="${selectedPerson?.name}" class="form-control text-center">
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text">look: </span>
-                    <input type="number" placeholder="weight" th:value="${selectedPerson?.wight}" class="form-control text-center">
-                    <input type="number" placeholder="height" th:value="${selectedPerson?.height}" class="form-control text-center">
+                    <input name="wight" type="number" placeholder="weight" th:field="*{wight}" th:value="${selectedPerson?.wight}" class="form-control text-center">
+                    <input name="height" type="number" placeholder="height" th:field="*{height}" th:value="${selectedPerson?.height}" class="form-control text-center">
                     <span class="input-group-text">Gender: </span>
-                    <input type="form-control text-center" th:value="${selectedPerson?.gender}">
+                    <input name="gender" type="form-control text-center" th:field="*{gender}" th:value="${selectedPerson?.gender}">
                     <span class="input-group-text">Eyes color: </span>
-                    <input type="text" th:value="${selectedPerson?.eyeColor}">
+                    <input name="eyeColor" type="text" th:field="*{eyeColor}" th:value="${selectedPerson?.eyeColor}">
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text">Contacts: </span>
-                    <input type="email" placeholder="Email" th:value="${selectedPerson?.email}" class="form-control text-center">
-                    <input type="text" placeholder="Mobile" th:value="${selectedPerson?.mobile}" class="form-control text-center">
+                    <input name="email" type="email" placeholder="Email" th:field="*{email}" th:value="${selectedPerson?.email}" class="form-control text-center">
+                    <input name="mobile" type="text" placeholder="Mobile" th:field="*{mobile}" th:value="${selectedPerson?.mobile}" class="form-control text-center">
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text">Temporaly: </span>
-                    <input type="text" th:value="${selectedPerson?.abLearn}" placeholder="ability to learn" class="form-control text-center">
-                    <input type="text" th:value="${selectedPerson?.fvColor}" placeholder="favorite color" class="form-control text-center">
-                    <input type="text" th:value="${selectedPerson?.ownStyle}" placeholder="style" class="form-control text-center">
+                    <input name="abLearn" type="text" th:field="*{abLearn}" th:value="${selectedPerson?.abLearn}" placeholder="ability to learn" class="form-control text-center">
+                    <input name="fvColor" type="text" th:field="*{fvColor}" th:value="${selectedPerson?.fvColor}" placeholder="favorite color" class="form-control text-center">
+                    <input name="ownStyle" type="text" th:field="*{ownStyle}" th:value="${selectedPerson?.ownStyle}" placeholder="style" class="form-control text-center">
                 </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Note: </span>
-                    <input type="text" placeholder="" class="form-control text-center">
                 </div>
                 <div class="input-group mb-3 justify-content-between">
-                    <button type="" class="col-3 btn btn-danger" th:hidden="${!(selectedPerson?.id > 0)}">Delete</button>
+                    <a th:href="@{'/person/' + ${selectedPerson?.id} + '/delete'}" class="col-3 btn btn-danger" th:hidden="${!(selectedPerson?.id > 0)}">Delete</a>
                     <button type="reset" class="col-3 btn btn-danger" th:hidden="${(selectedPerson?.id > 0)}">Reset</button>
-                    <button onclick="" class="col-3 btn btn-info" th:hidden="${!(selectedPerson?.id > 0)}">update</button>
+                    <a class="btn col-3 bg-success" th:href="@{'/person/'+${selectedPerson?.id}}" th:hidden="${!(selectedPerson?.id > 0)}" >Back to Notes</a>
+                    <button type="submit" class="col-3 btn btn-info" th:hidden="${!(selectedPerson?.id > 0)}">update</button>
                     <button type="submit" class="col-3 btn btn-primary" th:hidden="${(selectedPerson?.id > 0)}">Add person to DB</button>
                 </div>
             </form>
         </main>
-        <footer class="bg-danger fixed-bottom text-light text-center">
-            <p class="my-2">Secret web usage you cannot see. </p>
-        </footer>
+        <div th:replace="fragment/footer :: footer"></div>
     </body>
 </html>

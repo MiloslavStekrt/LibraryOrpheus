@@ -11,23 +11,27 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-@Table
+@Table(name = "users") // because i can't create table with name user only
 @Entity
 public class User {
+
     @Id
     @SequenceGenerator(name = "users_sequence", sequenceName = "users_sequence", allocationSize = 1 )
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_sequence")
     private Long id;
+
     @OneToMany(targetEntity = Event.class, cascade = CascadeType.ALL)
     private List<Event> events = new ArrayList<>();
+    
     @OneToMany(targetEntity = Note.class, cascade = CascadeType.ALL)
     private List<Note> notes = new ArrayList<>();
+    
     @OneToMany(targetEntity = Person.class, cascade = CascadeType.ALL)
     private List<Person> persons = new ArrayList<>();
 
-    private String passwordHash;
-    private String uid;
+    private String passwordHash, uid;
     
     // Getters
     public String getPasswordHash() { return passwordHash; }
@@ -50,9 +54,16 @@ public class User {
     public List<Note> getNotes() { return notes; }
 
     // Manipulation with Persons
-    public void addPerson(Person person) { persons.add(person); }
-    public void removePerson(Person person) { persons.remove(person); }
-    public void dropPersons() { persons.clear(); }
-    public List<Person> getPersons() { return persons; }
+    public void addFriend(Person person) { persons.add(person); }
+    public void removeFriend(Person person) { persons.remove(person); }
+    public void dropFriendsList() { persons.clear(); }
+    public List<Person> getFriendsList() { return persons; }
+    
+    // Constructors
+    public User() {}
+    public User(String uid, String pwd) {
+        this.uid = uid;
+        this.passwordHash = new BCryptPasswordEncoder().encode(pwd); //hashIt(pwd);
+    }
 
 }
