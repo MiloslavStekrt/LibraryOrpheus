@@ -9,6 +9,7 @@
 		<version>2.4.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>dev.levia</groupId>
 	<artifactId>LibraryOrpheus</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -45,7 +46,8 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<scope>runtime</scope>
+			<version>42.2.14</version>
+			<!-- <scope>runtime</scope> -->
 		</dependency>
 
 		<dependency>
@@ -82,7 +84,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
+				<!-- <configuration>
 					<archive>
 						<manifest>
 							<mainClass>dev.levia.LibraryOrpheus.LibraryOrpheusApplication</mainClass>
@@ -91,6 +93,14 @@
 					<descriptorRefs>
 					  	<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
+				</configuration> -->
+			</plugin>
+			<plugin>
+				<groupId>com.heroku.sdk</groupId>
+				<artifactId>heroku-maven-plugin</artifactId>
+				<version>3.0.3</version>
+				<configuration>
+					<appName>orpheus-library</appName>
 				</configuration>
 			</plugin>
 		</plugins>
