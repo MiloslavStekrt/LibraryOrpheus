@@ -31,7 +31,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
-	
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -58,7 +58,7 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
 		</dependency>
-<!-- 
+<!--
 		<dependency>
 			<groupId>com.google.cloud</groupId>
 			<artifactId>spring-cloud-gcp-starter-storage</artifactId>
@@ -103,6 +103,14 @@
 					<appName>orpheus-library</appName>
 				</configuration>
 			</plugin>
+			<!-- <plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<configuration>
+					<mainClass>dev.leavia.LibraryOrpheus.LibraryOrpheusApplication</mainClass>
+				</configuration>
+			</plugin> -->
 		</plugins>
 	</build>
 

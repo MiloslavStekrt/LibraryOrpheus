@@ -1,6 +1,8 @@
 package dev.levia.LibraryOrpheus.models;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +23,8 @@ public class Note {
     private Long id;
 
     private String note;
-    private Date whenDate;
+//    private Date whenDate;
+    private Timestamp whenDate;
 
     // @ManyToOne
     // @JoinColumn(name = "person_id", updatable = false, insertable = false)
@@ -31,30 +34,42 @@ public class Note {
     public Note(){}
     public Note(String note) {
         this.note = note;
-        this.whenDate = new Date(System.currentTimeMillis());
+        this.whenDate = new Timestamp(System.currentTimeMillis());
     }
-    public Note(String note, Date whenDate) {
+    public Note(String note, Timestamp whenDate) {
         this.note = note;
         this.whenDate = whenDate;
     }
     
     // Getters
     public Long getId() { return id; }
-    public Date getWhen() { return whenDate; }
-    public String getNote() { return note; }
-    public String getWhenNormal() {
-        return this.whenDate.getDay()+". "+this.whenDate.getMonth()+". "
-            +(new java.util.Date().getYear() != this.whenDate.getYear() ? this.whenDate.getYear() - 100 : "");
+    public Timestamp getWhen() {
+    	return this.whenDate;
     }
+    public String getNote() { return note; }
+//    @SuppressWarnings("deprecation")
+//	public String getWhenNormal() {
+//        return this.whenDate.getDay()+". "+this.whenDate.getMonth()+". "
+//            +(new java.util.Date().getYear() != this.whenDate.getYear() ? this.whenDate.getYear() - 100 : "");
+//    }
 
     // Setters
-    public void setWhen(Date whenDate) { this.whenDate = whenDate; }
+    public void setWhen(Timestamp whenDate) { this.whenDate = whenDate; }
     public void setNote(String note) { this.note = note; }
-
+    
+    
+    // to String methods
     public String toString() {
         return "Note {id: "+this.id
             +",title: "+this.note
             +", when: "+this.whenDate+"}";
+    }
+    public String toStingDate() {
+    	StringBuilder dateformat = new StringBuilder("HH:mm dd. MM. ");
+    	Timestamp now = new Timestamp(System.currentTimeMillis());
+    	if (now.getYear() != whenDate.getYear()) dateformat.append("yyyy. ");
+    	
+    	return new SimpleDateFormat(dateformat.toString()).format(this.whenDate);
     }
 
 }
