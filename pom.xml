@@ -12,7 +12,7 @@
 
 	<groupId>dev.levia</groupId>
 	<artifactId>LibraryOrpheus</artifactId>
-	<version>Beta Version 1</version>
+	<version>Beta1</version>
 	<name>LibraryOrpheus</name>
 	<description>v2 Library Orpheus project X</description>
 	<properties>
